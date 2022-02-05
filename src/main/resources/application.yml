@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: determination-mutatant-dna
+  config:
+    name: ${spring.application.name}-${SPRING_PROFILE}
+  profiles:
+    active: ${SPRING_PROFILE}
