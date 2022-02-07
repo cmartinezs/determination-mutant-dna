@@ -1,19 +1,19 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:${spring.application.name};DB_CLOSE_ON_EXIT=FALSE
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mariadb://45.7.231.125:3306/c5devsistema2?serverTimezone=America/Santiago&zeroDateTimeBehavior=convertToNull
+    username: c5devsistema
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     properties:
       hibernate:
         enable_lazy_load_no_trans: true
         hbm2ddl:
-          auto: create-drop
+          auto: none
         show_sql: false
         use_sql_comments: false
         format_sql: false
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MariaDB10Dialect
   sql:
     init:
       mode: never

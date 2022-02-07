@@ -63,8 +63,8 @@ class MutantServiceImplTest {
     @ParameterizedTest
     @MethodSource("getBySequenceParameters")
     void getBySequence(GetBySequenceParameters parameters) {
-        when(dnaSequenceJpaAdapter.getBySequence(anyString())).thenReturn(Optional.ofNullable(parameters.dto));
-        Optional<DnaSequenceDTO> bySequence = mutantServicePort.getBySequence(parameters.dna);
+        when(dnaSequenceJpaAdapter.getByMd5(anyString())).thenReturn(Optional.ofNullable(parameters.dto));
+        Optional<DnaSequenceDTO> bySequence = mutantServicePort.getByMd5(parameters.dna);
         assertEquals(parameters.empty, bySequence.isEmpty());
     }
 

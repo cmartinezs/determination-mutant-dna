@@ -12,5 +12,5 @@ import java.util.Optional;
  */
 @Repository
 public interface DnaSequenceRepository extends JpaRepository<DnaSequence, Long> {
-    Optional<DnaSequence> getBySequence(String sequence);
+    Optional<DnaSequence> getByMd5(String md5);
 }

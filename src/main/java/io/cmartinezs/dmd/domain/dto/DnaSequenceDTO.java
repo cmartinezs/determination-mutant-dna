@@ -16,5 +16,6 @@ import java.time.LocalDateTime;
 public class DnaSequenceDTO {
     private String sequence;
     private LocalDateTime createdAt;
+    private String md5;
     private boolean mutant;
 }

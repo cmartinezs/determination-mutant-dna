@@ -10,7 +10,7 @@ import java.util.Optional;
  * @version 1.0
  */
 public interface DnaSequencePersistencePort {
-    Optional<DnaSequenceDTO> getBySequence(String sequence);
+    Optional<DnaSequenceDTO> getByMd5(String md5);
     void save(DnaSequenceDTO dnaSequence);
     List<DnaSequenceDTO> getAll();
 }

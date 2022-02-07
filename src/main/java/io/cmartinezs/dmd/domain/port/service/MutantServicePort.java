@@ -9,7 +9,7 @@ import java.util.Optional;
  * @version 1.0
  */
 public interface MutantServicePort {
-    Optional<DnaSequenceDTO> getBySequence(String[] dna);
+    Optional<DnaSequenceDTO> getByMd5(String[] dna);
     boolean isMutant(String[] dna);
     void save(DnaSequenceDTO dnaSequenceDTO);
 }

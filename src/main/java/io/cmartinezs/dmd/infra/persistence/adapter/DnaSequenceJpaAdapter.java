@@ -21,8 +21,8 @@ public class DnaSequenceJpaAdapter implements DnaSequencePersistencePort {
     private final DnaSequenceRepository dnaSequenceRepository;
 
     @Override
-    public Optional<DnaSequenceDTO> getBySequence(String sequence) {
-        return dnaSequenceRepository.getBySequence(sequence).map(toDto());
+    public Optional<DnaSequenceDTO> getByMd5(String md5) {
+        return dnaSequenceRepository.getByMd5(md5).map(toDto());
     }
 
     @Override
@@ -35,6 +35,7 @@ public class DnaSequenceJpaAdapter implements DnaSequencePersistencePort {
                 .sequence(dnaSequence.getSequence())
                 .mutant(dnaSequence.isMutant())
                 .createdAt(dnaSequence.getCreatedAt())
+                .md5(dnaSequence.getMd5())
                 .build();
     }
 
@@ -51,6 +52,7 @@ public class DnaSequenceJpaAdapter implements DnaSequencePersistencePort {
                 .mutant(dnaSequence.isMutant())
                 .createdAt(dnaSequence.getCreatedAt())
                 .sequence(dnaSequence.getSequence())
+                .md5(dnaSequence.getMd5())
                 .build();
     }
 }

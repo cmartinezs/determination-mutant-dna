@@ -3,6 +3,7 @@ package io.cmartinezs.dmd.app.controller;
 import io.cmartinezs.dmd.app.request.MutantPost;
 import io.cmartinezs.dmd.domain.dto.DnaSequenceDTO;
 import io.cmartinezs.dmd.domain.port.service.MutantServicePort;
+import io.cmartinezs.dmd.common.util.MD5Utils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -33,7 +33,7 @@ public class MutantController {
     @PostMapping
     public ResponseEntity<Void> post(@RequestBody @Valid MutantPost request) {
         var requestDna = request.getDna();
-        var bySequence = mutantServicePort.getBySequence(requestDna);
+        var bySequence = mutantServicePort.getByMd5(requestDna);
         var mutant = new AtomicBoolean();
         bySequence.ifPresentOrElse(
                 dnaSequenceDTO -> {
@@ -50,9 +50,11 @@ public class MutantController {
     }
 
     private DnaSequenceDTO createDnaSequenceDto(@NonNull String[] requestDna, boolean mutant) {
+        String sequence = String.join("-", requestDna);
         return DnaSequenceDTO.builder()
                 .mutant(mutant)
-                .sequence(String.join("-", requestDna))
+                .sequence(sequence)
+                .md5(MD5Utils.md5Hex(sequence))
                 .build();
     }
 }

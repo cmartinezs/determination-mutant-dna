@@ -10,7 +10,7 @@ spring:
         enable_lazy_load_no_trans: true
         hbm2ddl:
           auto: create-drop
-        show_sql: true
+        show_sql: false
         use_sql_comments: false
         format_sql: false
         dialect: org.hibernate.dialect.H2Dialect

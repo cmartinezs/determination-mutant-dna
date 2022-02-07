@@ -4,12 +4,12 @@ import io.cmartinezs.dmd.domain.bussines.DnaMatrix;
 import io.cmartinezs.dmd.domain.dto.DnaSequenceDTO;
 import io.cmartinezs.dmd.domain.port.persistence.DnaSequencePersistencePort;
 import io.cmartinezs.dmd.domain.port.service.MutantServicePort;
+import io.cmartinezs.dmd.common.util.MD5Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -23,9 +23,9 @@ public class MutantServiceImpl implements MutantServicePort {
     private final DnaSequencePersistencePort dnaSequencePersistencePort;
 
     @Override
-    @Cacheable("getBySequence")
-    public Optional<DnaSequenceDTO> getBySequence(String[] dna) {
-        return dnaSequencePersistencePort.getBySequence(String.join("-", dna));
+    @Cacheable("getByMd5")
+    public Optional<DnaSequenceDTO> getByMd5(String[] dna) {
+        return dnaSequencePersistencePort.getByMd5(MD5Utils.md5Hex(String.join("-", dna)));
     }
 
     @Override

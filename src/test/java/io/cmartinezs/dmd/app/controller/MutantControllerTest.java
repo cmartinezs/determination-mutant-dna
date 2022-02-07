@@ -35,7 +35,7 @@ class MutantControllerTest {
     @ParameterizedTest
     @MethodSource("postOkParameters")
     void postOk(MutantTestPost mutantTestPost) {
-        when(mutantServicePort.getBySequence(any())).thenReturn(Optional.ofNullable(mutantTestPost.dto));
+        when(mutantServicePort.getByMd5(any())).thenReturn(Optional.ofNullable(mutantTestPost.dto));
         when(mutantServicePort.isMutant(any())).thenReturn(mutantTestPost.isMutant);
         ResponseEntity<Void> post = mutantController.post(mutantTestPost.request);
         assertEquals(mutantTestPost.status, post.getStatusCode());

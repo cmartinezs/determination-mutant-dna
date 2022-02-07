@@ -24,8 +24,11 @@ public class DnaSequence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String sequence;
+
+    @Column(nullable = false, unique = true, length = 32)
+    private String md5;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)

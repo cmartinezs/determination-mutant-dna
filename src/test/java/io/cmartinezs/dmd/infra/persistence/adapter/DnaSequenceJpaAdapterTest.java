@@ -1,15 +1,12 @@
 package io.cmartinezs.dmd.infra.persistence.adapter;
 
 import io.cmartinezs.dmd.domain.dto.DnaSequenceDTO;
-import io.cmartinezs.dmd.domain.port.persistence.DnaSequencePersistencePort;
-import io.cmartinezs.dmd.domain.service.StatServiceImpl;
 import io.cmartinezs.dmd.infra.persistence.entity.DnaSequence;
 import io.cmartinezs.dmd.infra.persistence.repository.DnaSequenceRepository;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,7 +17,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -39,8 +35,8 @@ class DnaSequenceJpaAdapterTest {
     @ParameterizedTest
     @MethodSource("getBySequenceParameters")
     void getBySequence(GetBySequenceParameter parameter) {
-        when(dnaSequenceRepository.getBySequence(parameter.sequence)).thenReturn(Optional.ofNullable(parameter.entity));
-        Optional<DnaSequenceDTO> bySequence = dnaSequenceJpaAdapter.getBySequence(parameter.sequence);
+        when(dnaSequenceRepository.getByMd5(parameter.sequence)).thenReturn(Optional.ofNullable(parameter.entity));
+        Optional<DnaSequenceDTO> bySequence = dnaSequenceJpaAdapter.getByMd5(parameter.sequence);
         assertEquals(parameter.empty, bySequence.isEmpty());
     }
 
