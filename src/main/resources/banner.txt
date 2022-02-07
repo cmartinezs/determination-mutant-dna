@@ -17,5 +17,4 @@ ___  ___      _              _    ______ _   _   ___
 /\__/ /  __/ |   \ V /| | (_|  __/                                 
 \____/ \___|_|    \_/ |_|\___\___|                                 
 
-${application.title} - ${application.version}
 Powered by Spring Boot ${spring-boot.version}

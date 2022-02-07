@@ -2,6 +2,11 @@ spring:
   application:
     name: determination-mutatant-dna
   config:
-    name: ${spring.application.name}-${SPRING_PROFILE}
+    name: ${spring.application.name}-${SPRING_PROFILE}-${APP_VERSION}
   profiles:
     active: ${SPRING_PROFILE}
+
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: /${APP_VERSION}

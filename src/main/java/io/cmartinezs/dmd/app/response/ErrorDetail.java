@@ -13,14 +13,13 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorDetail {
-
     @NonNull
     private String field;
-
     @NonNull
     private List<String> detail;
 }

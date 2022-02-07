@@ -1,8 +1,11 @@
 package io.cmartinezs.dmd.app.controller;
 
 import io.cmartinezs.dmd.app.request.MutantPost;
+import io.cmartinezs.dmd.domain.dto.DnaSequenceDTO;
 import io.cmartinezs.dmd.domain.port.service.MutantServicePort;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Carlos
  * @version 1.0
  */
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/mutant")
@@ -26,7 +32,27 @@ public class MutantController {
 
     @PostMapping
     public ResponseEntity<Void> post(@RequestBody @Valid MutantPost request) {
-        boolean isMutant = mutantServicePort.isMutant(request.getDna());
-        return isMutant ? ResponseEntity.ok().build() : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        var requestDna = request.getDna();
+        var bySequence = mutantServicePort.getBySequence(requestDna);
+        var mutant = new AtomicBoolean();
+        bySequence.ifPresentOrElse(
+                dnaSequenceDTO -> {
+                    mutant.set(dnaSequenceDTO.isMutant());
+                    log.info("{} - DNA determination from persistence. Is mutant = {}", requestDna, mutant.get());
+                },
+                () -> {
+                    mutant.set(mutantServicePort.isMutant(requestDna));
+                    mutantServicePort.save(createDnaSequenceDto(requestDna, mutant.get()));
+                    log.info("{} - Calculated DNA determination. Is mutant = {}", requestDna, mutant.get());
+                }
+        );
+        return mutant.get() ? ResponseEntity.ok().build() : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    private DnaSequenceDTO createDnaSequenceDto(@NonNull String[] requestDna, boolean mutant) {
+        return DnaSequenceDTO.builder()
+                .mutant(mutant)
+                .sequence(String.join("-", requestDna))
+                .build();
     }
 }

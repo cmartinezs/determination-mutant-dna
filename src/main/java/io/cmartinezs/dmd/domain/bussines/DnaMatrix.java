@@ -18,7 +18,6 @@ import java.util.stream.Stream;
  * @version 1.0
  */
 @Slf4j
-@Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class DnaMatrix {
 
@@ -27,7 +26,6 @@ public class DnaMatrix {
     private static final Pattern ADN_NITROGENIC_BASES = Pattern.compile("^[ACGT]*$");
     private static final Pattern ADN_MUTANT_SEQUENCE = Pattern.compile("^(.*)(A{4}|C{4}|G{4}|T{4})(.*)$");
 
-    @NonNull
     private final char[][] matrix;
     private long verticalCount;
     private long horizontalCount;
@@ -44,8 +42,8 @@ public class DnaMatrix {
         );
     }
 
-    private static void validateDnaMatrix(@NonNull String[] dna) {
-        int size = dna.length;
+    private static void validateDnaMatrix(String[] dna) {
+        var size = dna.length;
 
         if(size < MIN_LENGTH_SEQUENCE) {
             throw new DnaMatrixException("The DNA sequence is not present or does not have the minimum length necessary to evaluate");
@@ -63,10 +61,10 @@ public class DnaMatrix {
     }
 
     public boolean isMutant() {
-        if(!this.isAnalyzed()) {
+        if(!this.analyzed) {
             this.analyze();
         }
-        return this.verticalCount + this.horizontalCount + this.diagonalCount > 0;
+        return this.verticalCount + this.horizontalCount + this.diagonalCount > MIN_SEQUENCES;
     }
 
     private void analyze() {
@@ -84,7 +82,7 @@ public class DnaMatrix {
         return countSequence(leftRotateMatrix(this.matrix));
     }
 
-    private long countSequence(@NonNull char[][] matrix) {
+    private long countSequence(char[][] matrix) {
         return Arrays.stream(matrix)
                 .map(String::copyValueOf)
                 .filter(this.getMatchesMutantPredicate())
@@ -97,18 +95,18 @@ public class DnaMatrix {
                 .count();
     }
 
-    private String getDiagonal(@NonNull char[][] matrix) {
-        int length = matrix.length;
-        StringBuilder sb = new StringBuilder();
+    private String getDiagonal(char[][] matrix) {
+        var length = matrix.length;
+        var sb = new StringBuilder();
         for(int row = 0; row < length; row++) {
             sb.append(matrix[row][row]);
         }
         return sb.toString();
     }
 
-    private char[][] leftRotateMatrix(@NonNull char[][] matrix) {
-        int length = matrix.length;
-        char[][] auxMatrix = new char[length][length];
+    private char[][] leftRotateMatrix(char[][] matrix) {
+        var length = matrix.length;
+        var auxMatrix = new char[length][length];
         for(int row = 0; row < length; row++) {
             for(int col = 0; col < length; col++) {
                 auxMatrix[length-col-1][row] = matrix[row][col];
@@ -119,7 +117,7 @@ public class DnaMatrix {
 
     private Predicate<String> getMatchesMutantPredicate() {
         return s -> {
-            boolean matches = ADN_MUTANT_SEQUENCE.matcher(s).matches();
+            var matches = ADN_MUTANT_SEQUENCE.matcher(s).matches();
             log.info("secuence: {} - matches: {}", s, matches);
             return matches;
         };

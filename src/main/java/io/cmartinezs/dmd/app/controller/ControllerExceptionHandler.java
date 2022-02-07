@@ -7,6 +7,7 @@ import io.cmartinezs.dmd.domain.exception.DnaMatrixException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,7 +30,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ErrorResponse> exception(Exception exception){
-        log.error(COMMON_EXCEPTION_MESSAGE_LOG, exception.getMessage());
+        log.error(COMMON_EXCEPTION_MESSAGE_LOG.concat(" | {}"), exception.getClass().getSimpleName(), exception.getMessage());
         return ResponseEntity.internalServerError()
                 .body(ErrorResponse.builder()
                         .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
@@ -39,6 +40,16 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler({JsonParseException.class})
     public ResponseEntity<ErrorResponse> jsonParseException(JsonParseException exception){
+        log.error(COMMON_EXCEPTION_MESSAGE_LOG, exception.getMessage());
+        return ResponseEntity.badRequest()
+                .body(ErrorResponse.builder()
+                        .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+                        .message("The request structure is not valid")
+                        .build());
+    }
+
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    public ResponseEntity<ErrorResponse> httpMessageNotReadableException(HttpMessageNotReadableException exception){
         log.error(COMMON_EXCEPTION_MESSAGE_LOG, exception.getMessage());
         return ResponseEntity.badRequest()
                 .body(ErrorResponse.builder()
