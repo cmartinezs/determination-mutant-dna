@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "10289fd4-1ac6-4644-ac2d-365b1ca6911a",
+		"name": "determination-mutant-dna",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Mutant",
+			"item": [
+				{
+					"name": "Is Mutant - 200",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dna\": [\"ACGTACC\", \"CGTACAA\", \"GTCCAAA\", \"CCAAAAC\", \"GTACAAA\", \"GTCCGAA\", \"GTCCGAA\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{determination-mutant-dna-server}}/mutant",
+							"host": [
+								"{{determination-mutant-dna-server}}"
+							],
+							"path": [
+								"mutant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Mutant - 403",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dna\": [\"ACGTACC\", \"CGTACAA\", \"GTCCACT\", \"CCATAAC\", \"GTACACT\", \"GTCCGAT\", \"GTCCGAG\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{determination-mutant-dna-server}}/mutant",
+							"host": [
+								"{{determination-mutant-dna-server}}"
+							],
+							"path": [
+								"mutant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Mutant - 400 - It is not an NxN matrix",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dna\": [\"ACGTACC\", \"CGTACAA\", \"GTCCAAA\", \"CCAAAAC\", \"GTACAAA\", \"GTCCGAA\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{determination-mutant-dna-server}}/mutant",
+							"host": [
+								"{{determination-mutant-dna-server}}"
+							],
+							"path": [
+								"mutant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Mutant - 400 - Not a valid DNA sequence",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dna\": [\"ACGTACC\", \"CGTACAA\", \"GTCCAAA\", \"CCAAAAC\", \"GTACAAA\", \"GTCCZAA\", \"GTCCGAA\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{determination-mutant-dna-server}}/mutant",
+							"host": [
+								"{{determination-mutant-dna-server}}"
+							],
+							"path": [
+								"mutant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Mutant - 400 - The DNA sequence is not present or does not have the minimum length necessary to evaluate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dna\": [\"ACGTACC\", \"CGTACAA\", \"GTCCAAA\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{determination-mutant-dna-server}}/mutant",
+							"host": [
+								"{{determination-mutant-dna-server}}"
+							],
+							"path": [
+								"mutant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is Mutant - 400 - The DNA sequence is not present or does not have the minimum length necessary to evaluate Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{determination-mutant-dna-server}}/mutant",
+							"host": [
+								"{{determination-mutant-dna-server}}"
+							],
+							"path": [
+								"mutant"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Stats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dna\": [\"ACGTACC\", \"CGTACAA\", \"GTCCAAA\", \"CCAAAAC\", \"GTACAAA\", \"GTCCGAA\", \"GTCCGAA\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{determination-mutant-dna-server}}/stats",
+							"host": [
+								"{{determination-mutant-dna-server}}"
+							],
+							"path": [
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Actuator",
+			"item": [
+				{
+					"name": "Actuator",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dna\": [\"ACGTACC\", \"CGTACAA\", \"GTCCAAA\", \"CCAAAAC\", \"GTACAAA\", \"GTCCGAA\", \"GTCCGAA\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{determination-mutant-dna-server}}/actuator",
+							"host": [
+								"{{determination-mutant-dna-server}}"
+							],
+							"path": [
+								"actuator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Healtk",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{determination-mutant-dna-server}}/actuator/health",
+							"host": [
+								"{{determination-mutant-dna-server}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

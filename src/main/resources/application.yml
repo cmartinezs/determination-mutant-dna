@@ -6,5 +6,9 @@ spring:
   profiles:
     active: ${SPRING_PROFILE}
 
+swagger:
+  info:
+    app-version: ${APP_VERSION}
+
 server:
   port: ${PORT:8080}
