@@ -2,7 +2,6 @@ package io.cmartinezs.dmd.domain.bussines;
 
 import io.cmartinezs.dmd.domain.exception.DnaMatrixException;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -118,7 +117,7 @@ public class DnaMatrix {
     private Predicate<String> getMatchesMutantPredicate() {
         return s -> {
             var matches = ADN_MUTANT_SEQUENCE.matcher(s).matches();
-            log.info("secuence: {} - matches: {}", s, matches);
+            log.info("sequence: {} - matches: {}", s, matches);
             return matches;
         };
     }
